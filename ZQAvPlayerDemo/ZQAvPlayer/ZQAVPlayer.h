@@ -16,29 +16,60 @@
 #import "ZQVideoComplexControlBar.h"
 #import "ZQTouchControlView.h"
 
-
-
 @protocol ZQAVPlayerDelegate <NSObject>
 @optional
+
+/**
+ 返回按钮点击
+ */
 -(void)playerBackBtnClicked;
--(void)playerCacheBtnClicked;
+
+/**
+ 播放结束
+ */
 -(void)playerEnd;
+
+/**
+ 进入全屏
+ */
 -(void)go2FullScreen;
+
+/**
+ 退出全屏
+ */
 -(void)exitFullScreen;
+
+/**
+ 屏幕方向改变
+ */
 -(void)OrienrationChanged:(UIDeviceOrientation)orientation;
--(void)playerSelectAtVideo:(id)video;
+
+/**
+ 开始播放
+
+ @param seconds 开始播放位置(秒)
+ */
 -(void)playerStartPlay:(NSInteger)seconds;
+
+/**
+ 播放中断
+
+ @param seconds 中断播放位置(秒)
+ */
 -(void)breakEventBecome:(NSInteger)seconds;
+
+/**
+ 切换地址
+ */
 -(void)changeEventBecome;
+
+/**
+ 播放出错
+ */
+-(void)errorEventBecome;
 
 @end
 
-
-typedef enum
-{
-    player_local,
-    player_online,
-}PlayerType;
 
 
 
@@ -50,8 +81,6 @@ typedef enum
 @property (assign,nonatomic) BOOL locked;
 
 
-
-
 @property (assign,nonatomic) PlaySate currentPlayState;//当前播放状态：播放、暂停、缓冲、重连
 
 
@@ -60,7 +89,7 @@ typedef enum
  url：地址
  type：类型 本地或网络
  */
--(instancetype)initWithFrame:(CGRect)frame url:(NSString*)url type:(PlayerType)type;
+-(instancetype)initWithFrame:(CGRect)frame url:(NSString*)url;
 
 
 

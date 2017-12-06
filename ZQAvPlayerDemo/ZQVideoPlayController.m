@@ -9,6 +9,7 @@
 
 
 #import "ZQVideoPlayController.h"
+#import "UINavigationController+Rotation.h"
 
 @interface ZQVideoPlayController ()<ZQAVPlayerDelegate>
 {
@@ -30,9 +31,7 @@
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:true animated:true];
-//    if (_player.currentPlayState == playState_Pausing) {
         [_player play];
-//    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -49,6 +48,9 @@
     [super viewDidDisappear:animated];
 }
 
+- (BOOL)prefersStatusBarHidden{
+    return YES;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -66,12 +68,9 @@
 -(void)makePlayer
 {
     if (_player == nil) {
-    
-        
-        _player = [[ZQAVPlayer alloc] initWithFrame:CGRectMake(0, 20, ScreenWidth, titleImgHeight) url:@"http://27.112.86.59:1935/vod1//2017_11/22/1511344230826.mp4" type:player_online];
+        _player = [[ZQAVPlayer alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, titleImgHeight) url:@"http://27.112.86.59:1935/vod1//2017_11/22/1511344230826.mp4"];
         _player.delegate = self;
         [self.view addSubview:_player];
-//        [_player play];
     }
 }
 
@@ -97,35 +96,6 @@
 }
 
 
--(void)playerStartPlay:(NSInteger)seconds
-{
-    
-    
-    _stratTime = seconds;
-    _isOneLoop = YES;
-}
-
-
--(void)breakEventBecome:(NSInteger)second
-{
-    if (_isOneLoop) {
-        _isOneLoop = NO;
-        _breakTime = second;
-        _playTime = _breakTime - _stratTime;
-        _stayTime = _stayTime + _playTime;
-        _playTime = 0;
-    }
-    
-    
-}
--(void)changeEventBecome
-{
-    NSLog(@"从这个时间切换了视频changeEventBecome");
-    
-    
-    
-    
-}
 
 
 #pragma mark PlayerDelegate
@@ -139,6 +109,7 @@
 
 -(void)go2FullScreen
 {
+    
     [_player showBackBtn:true];
     
     [self.view addSubview:_player];
@@ -149,14 +120,71 @@
 -(void)playerEnd
 {
     
+    NSLog(@"播放结束");
+
+}
+
+-(void)playerStartPlay:(NSInteger)seconds
+{
+    _stratTime = seconds;
+    _isOneLoop = YES;
+    
+    NSLog(@"从%ld秒开始播放",seconds);
+
+}
+
+
+-(void)breakEventBecome:(NSInteger)second
+{
+    if (_isOneLoop) {
+        _isOneLoop = NO;
+        _breakTime = second;
+        _playTime = _breakTime - _stratTime;
+        _stayTime = _stayTime + _playTime;
+        _playTime = 0;
+    }
+    NSLog(@"从%ld秒开始停止播放",second);
+
+    
+}
+-(void)changeEventBecome
+{
+    NSLog(@"从这切换了视频changeEventBecome");
+}
+
+-(void)exitFullScreen
+{
+    NSLog(@"退出了全屏changeEventBecome");
+
+}
+-(void)OrienrationChanged:(UIDeviceOrientation)orientation;
+{
+    NSLog(@"屏幕方向发生了变化");
+
     
 }
 
+-(void)errorEventBecome
+{
+    NSLog(@"播放出错");
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
+
+
+- (BOOL)shouldAutorotate {
+    
+    if (_player.locked) {
+        
+        return true;
+        
+        
+    }else{
+        return false;
+        
+    }
+}
+
+
 
 
 @end

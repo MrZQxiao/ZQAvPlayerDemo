@@ -20,6 +20,8 @@
     CGPoint _originalLocation;//保存最后的滑动位置
     
     ZQProgressView* _mediaProgressView;//亮度显示、音量显示、时间进度显示
+    
+
 }
 -(instancetype)initWithFrame:(CGRect)frame
 {
@@ -38,6 +40,11 @@
     [super setFrame:frame];
     _mediaProgressView.center = self.center;
     
+    CGFloat lockBtnW = 36;
+    CGFloat lockBtnY = (self.bounds.size.height - lockBtnW)*0.5;
+    CGFloat lockBtnX = 20;
+    
+    _lockBtn.frame = CGRectMake(lockBtnX, lockBtnY, lockBtnW, lockBtnW);
     UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapMethod)];
     tap.numberOfTapsRequired = 2;
     [self addGestureRecognizer:tap];
@@ -58,6 +65,22 @@
 
 -(void)initMediaProgressView
 {
+    CGFloat lockBtnW = 36;
+    CGFloat lockBtnY = (self.bounds.size.height - lockBtnW)*0.5;
+    CGFloat lockBtnX = 20;
+
+    _lockBtn = [[UIButton alloc] initWithFrame:CGRectMake(lockBtnX, lockBtnY, lockBtnW, lockBtnW)];
+    [_lockBtn setImage:[UIImage imageNamed:@"bar_button_5"] forState:UIControlStateNormal];
+    [_lockBtn setImage:[UIImage imageNamed:@"bar_button_5_selected"] forState:UIControlStateSelected];
+    _lockBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    
+    [_lockBtn addTarget:self action:@selector(lockedBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    _lockBtn.selected = NO;
+    _lockBtn.hidden = YES;
+    _locked = NO;
+    [self addSubview:_lockBtn];
+    
+    
     _mediaProgressView = [[ZQProgressView alloc] initWithFrame:CGRectMake((self.bounds.size.width - MediaProgressViewHeight)/2, (self.bounds.size.height - MediaProgressViewHeight)/2, MediaProgressViewHeight, MediaProgressViewHeight)];
     _mediaProgressView.delegate = self;
     [self addSubview:_mediaProgressView];
@@ -65,6 +88,16 @@
 }
 
 #pragma mark -
+
+- (void)lockedBtnClick:(UIButton *)sender
+{
+    sender.selected = !sender.selected;
+    self.locked = !self.locked;
+    if ([self.delegate respondsToSelector:@selector(lockedClick:)]) {
+        [self.delegate lockedClick:self.locked];
+    }
+}
+
 #pragma mark TouchMethods 音量 亮度 进退
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -107,9 +140,7 @@
 
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (_locked == true) {
-        return;
-    }
+    
     NSLog(@"移动中。。。");
     [_delegate touchViewTouchMovedType:GestureTypeOfNone];
     UITouch *touch = [touches anyObject];
@@ -123,37 +154,52 @@
         return;
     }
     
-    
-    
-    /**
-     上下滑动：纵向偏移>横向偏移 offset_y>offset_x
-     左右滑动：横向偏移>纵向偏移 offset_x>offset_y
-     */
-    
     CGRect frame = self.bounds;
-    //    if (_gestureType == GestureTypeOfNone) {
-    if ((currentLocation.x > frame.size.width*0.7) && (ABS(offset_x) <= ABS(offset_y)))
-    {
-        _gestureType = GestureTypeOfVolume;
+
+    
+    if (ABS(offset_x)<10&&ABS(offset_y)<10) {
+        _gestureType = GestureTypeOfNone;
+
+    }else{
         
-        NSLog(@"右侧——音量");
-    }else if ((currentLocation.x < frame.size.width*0.3) && (ABS(offset_x) <= ABS(offset_y)))
-    {
-        _gestureType = GestureTypeOfBrightness;
-        
-        NSLog(@"左侧——亮度");
-    }else if ((ABS(offset_x) >= ABS(offset_y))) {
-        if (_canRespondProgressChange &&   ABS(offset_x) > minOffset) {
-            NSLog(@"中间——进度");
+        if (_locked == true) {
             
-            _gestureType = GestureTypeOfProgress;
-        }else
+            [self showLocked];
+            return;
+        }
+        /**
+         上下滑动：纵向偏移>横向偏移 offset_y>offset_x
+         左右滑动：横向偏移>纵向偏移 offset_x>offset_y
+         */
+        
+        //    if (_gestureType == GestureTypeOfNone) {
+        if ((currentLocation.x > frame.size.width*0.7) && (ABS(offset_x) <= ABS(offset_y)))
         {
-            _gestureType = GestureTypeOfNone;
+            _gestureType = GestureTypeOfVolume;
+            
+            NSLog(@"右侧——音量");
+        }else if ((currentLocation.x < frame.size.width*0.3) && (ABS(offset_x) <= ABS(offset_y)))
+        {
+            _gestureType = GestureTypeOfBrightness;
+            
+            NSLog(@"左侧——亮度");
+        }else if ((ABS(offset_x) >= ABS(offset_y))) {
+            if (_canRespondProgressChange && ABS(offset_x) > minOffset) {
+                NSLog(@"中间——进度");
+                
+                _gestureType = GestureTypeOfProgress;
+            }else
+            {
+                _gestureType = GestureTypeOfNone;
+            }
+            
+            
         }
         
         
     }
+    
+
     //    }
     if ((_gestureType == GestureTypeOfProgress) && (ABS(offset_x) > ABS(offset_y))) {
         float progress;
@@ -227,6 +273,9 @@
         [_delegate performSelector:@selector(touchViewUnlockScreen)];
     }
 }
+
+
+
 
 -(void)showLocked
 {

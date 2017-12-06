@@ -18,10 +18,7 @@
     UIButton* _playBtn;
     UILabel* _playTimeLabel;
     ZQButton* _fullScreenBtn;
-    UIButton* _lockBtn;
     
-    
-    UIView* _optionView;
     
     BOOL _pauseProgress;
     
@@ -40,11 +37,7 @@
 
 -(void)initUI
 {
-    //    self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.8];
     
-    //半透明背景
-    //    _backView = [[UIView alloc] initWithFrame:CGRectMake(0, ProGressHeight/2, self.bounds.size.width, self.bounds.size.height - ProGressHeight/2)];
-    //    _backView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.8];
     _backView = [UIUtils makeEffectViewWithFrame:CGRectMake(0, ProGressHeight/2, self.bounds.size.width, self.bounds.size.height - ProGressHeight/2) stype:UIBlurEffectStyleDark cornerRadius:0];
     [self addSubview:_backView];
     
@@ -82,7 +75,6 @@
     
    
     
-    [self initOptionView];
     
     //    [UIUtils AddTestColorToView:self];
 }
@@ -95,51 +87,10 @@
 #pragma mark -
 #pragma mark 功能view
 
--(void)showBarButtons:(ControlBarButtonType)firstType,...
-{
-    va_list args;
-    va_start(args, firstType);
-    for (ControlBarButtonType type = firstType; type < control_barButton_Count && type!=0; type = va_arg(args,ControlBarButtonType)) {
-        NSLog(@"type = %ld",type);
-        [self optionViewInsertButtonWithType:type];
-    }
-    va_end(args);
-}
 
--(void)initOptionView
-{
-    _optionView = [[UIView alloc] init];
-    _optionView.hidden = true;
-    [self addSubview:_optionView];
-}
 
--(void)optionViewInsertButtonWithType:(ControlBarButtonType)type
-{
-    float margin = 10;
-    float btnHeight = ControlBarHeight - ProGressHeight - margin;
-    NSUInteger count = _optionView.subviews.count;
-    
-    //    //更新optionview的frame
-    //    float optionWidth = (count+1)*btnHeight+(count)*margin;
-    //    float opthinX = _fullScreenBtn.frame.origin.x - optionWidth;
-    //    _optionView.frame = CGRectMake(opthinX, ProGressHeight, optionWidth, btnHeight);
-    
-    //创建一个button 新的放在最后面
-    ZQButton *button = [[ZQButton alloc] init];
-    button.frame = CGRectMake(count*btnHeight + count*margin, 0, btnHeight, btnHeight);
-    button.tag = type;
-    [button addTarget:self action:@selector(optionBarButtonClick:) forControlEvents:UIControlEventTouchDown];
-    [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bar_button_%ld",(long)type]] forState:UIControlStateNormal];
-    [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"bar_button_%ld_selected",(long)type]] forState:UIControlStateSelected];
-    [_optionView addSubview:button];
-    
-    if (type == control_barButton_lock ) {
-        _lockBtn = button;
-    }
-    
-    //    [UIUtils AddTestColorToView:_optionView];
-    
-}
+
+
 
 -(void)playBtnMethod:(ZQButton*)sender
 {
@@ -152,6 +103,12 @@
     {
         sender.selected = false;//播放
     }
+}
+
+- (void)setPlayStatus:(BOOL)status
+{
+    _playBtn.selected = status;//播放
+
 }
 
 -(void)fullScreenMethod:(ZQButton*)sender
@@ -218,56 +175,11 @@
     _pauseProgress = false;
 }
 
-#pragma mark -
-#pragma mark OptionalBtnsMethod
-
--(void)optionBarButtonClick:(ZQButton*)sender
-{
-    if ([_delegate respondsToSelector:@selector(controlBarBtnClick:)]) {
-        [_delegate controlBarBtnClick:sender.tag];
-    }
-    switch (sender.tag) {
-        case control_barButton_download:
-        {
-            [UIUtils msgHint:@"下载"];
-        }
-            break;
-        case control_barButton_share:
-        {
-            [UIUtils msgHint:@"分享"];
-        }
-            break;
-        case control_barButton_praise:
-        {
-            [UIUtils msgHint:@"点赞"];
-        }
-            break;
-        case control_barButton_fav:
-        {
-            [UIUtils msgHint:@"收藏"];
-        }
-            break;
-        case control_barButton_lock:
-        {
-            if (sender.selected == false) {
-                //                [UIUtils msgHint:@"上锁"];
-                sender.selected = true;
-            }else if(sender.selected == true)
-            {
-                //                [UIUtils msgHint:@"开锁"];
-                sender.selected = false;
-            }
-        }
-            break;
-            
-        default:
-            break;
-    }
-}
 
 
 
-#pragma mark -
+
+
 #pragma mark 切换全屏/小屏
 
 -(void)setFullScreenStyle:(CGRect)frame
@@ -279,33 +191,24 @@
     float btnHeight = ControlBarHeight - ProGressHeight - margin;
     float viewY =  ProGressHeight;
     
-    //    _playBtn.frame = CGRectMake(btnHeight+2*margin, viewY, btnHeight, btnHeight);
-    //    _goBeforeBtn.frame = CGRectMake(margin, viewY, btnHeight, btnHeight);
-    //    _goBeforeBtn.hidden = false;
-    //    _goNextBtn.frame = CGRectMake(2*btnHeight + 3*margin, viewY, btnHeight, btnHeight);
-    //    _goNextBtn.hidden = false;
-    
-    _optionView.hidden = false;
     
     
     
     _fullScreenBtn.frame = CGRectMake(self.bounds.size.width-margin-btnHeight, viewY, btnHeight, btnHeight);
     _fullScreenBtn.selected = true;
     
-    //功能栏
-    NSUInteger count = _optionView.subviews.count;
-    float optionWidth = count*btnHeight + count*margin;
-    float opthinX = _fullScreenBtn.frame.origin.x - optionWidth;
-    _optionView.frame = CGRectMake(opthinX, ProGressHeight, optionWidth, btnHeight);
+   
+    
+    
     
     float timeLabelWidth = 100; //opthinX - (_goNextBtn.frame.origin.x+_goNextBtn.frame.size.width)  - 2*margin;
     
     
     float timeLabelX = 1*btnHeight+2*margin;
     _playTimeLabel.frame = CGRectMake(timeLabelX, viewY, timeLabelWidth, btnHeight);
-    float progressX = timeLabelX + timeLabelWidth + margin;
-    float progressWidth = opthinX - progressX - 2*margin;
-    progress.frame = CGRectMake(progressX, viewY, progressWidth, ProGressHeight);
+//    float progressX = timeLabelX + timeLabelWidth + margin;
+//    float progressWidth = opthinX - progressX - 2*margin;
+    progress.frame = CGRectMake(0,0, self.bounds.size.width, ProGressHeight);
     
 }
 
@@ -319,7 +222,6 @@
     
     //半透明背景
     _backView.frame = CGRectMake(0, ProGressHeight/2, self.bounds.size.width, self.bounds.size.height - ProGressHeight/2);
-    _optionView.hidden = true;
     
     float margin = 10;
     float btnHeight = ControlBarHeight - ProGressHeight - margin;
@@ -329,11 +231,7 @@
     
     progress.frame = CGRectMake(0,0, self.bounds.size.width, ProGressHeight);
     
-    //    _playBtn.frame = CGRectMake(margin,viewY , btnHeight, btnHeight);
-    //    _goNextBtn.hidden = true;
-    //    _goBeforeBtn.hidden = true;
     
-    //    [self addSubview:_playBtn];
     
     _playTimeLabel.frame = CGRectMake(2*margin+btnHeight, viewY, 100, btnHeight);
     
@@ -382,13 +280,6 @@
     }
 }
 
-/**
- 更新锁定按钮状态
- */
--(void)setLocked:(BOOL)_locked
-{
-    _lockBtn.selected = _locked;
-}
 
 
 @end

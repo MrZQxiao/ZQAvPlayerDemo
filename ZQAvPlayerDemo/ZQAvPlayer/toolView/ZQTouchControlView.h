@@ -18,11 +18,15 @@ typedef NS_ENUM(NSInteger, GestureType){
 
 @protocol ZQTouchControlViewDelegate <NSObject>
 -(float)progressValueDidChanged:(float)value;
+
+- (void)lockedClick:(BOOL)locked;
+
 -(void)touchViewBeginTouchType:(GestureType)_type;
 -(void)touchViewEndTouchType:(GestureType)_type;
 -(void)touchViewTouchMovedType:(GestureType)_type;
 -(void)touchViewDoubleTap;
 -(void)touchViewUnlockScreen;
+
 @end
 @interface ZQTouchControlView : UIView<ZQProgressViewDelegate,UIGestureRecognizerDelegate>
 @property (weak,nonatomic) id<ZQTouchControlViewDelegate>delegate;
@@ -31,9 +35,13 @@ typedef NS_ENUM(NSInteger, GestureType){
 
 @property (assign,nonatomic) BOOL locked;
 
+@property (nonatomic,strong)UIButton *lockBtn;
+
 -(void)startLoadingView;
 -(void)endLoadingView;
 -(void)enableTouchView;
 -(void)showLocked;
+
+
 
 @end

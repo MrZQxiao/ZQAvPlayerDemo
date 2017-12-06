@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		096110891FD7BCB20036915D /* UINavigationController+Rotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 096110871FD7BCB20036915D /* UINavigationController+Rotation.m */; };
 		099F41641FD64DFB0020367D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 099F41631FD64DFB0020367D /* AppDelegate.m */; };
 		099F41671FD64DFB0020367D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 099F41661FD64DFB0020367D /* ViewController.m */; };
 		099F416A1FD64DFB0020367D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 099F41681FD64DFB0020367D /* Main.storyboard */; };
@@ -33,8 +34,8 @@
 		099F41E01FD68F260020367D /* bar_button_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 099F41CF1FD68F260020367D /* bar_button_2.png */; };
 		099F41E11FD68F260020367D /* bar_button_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 099F41D01FD68F260020367D /* bar_button_3.png */; };
 		099F41E21FD68F260020367D /* bar_button_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 099F41D11FD68F260020367D /* bar_button_4.png */; };
-		099F41E31FD68F260020367D /* bar_button_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 099F41D21FD68F260020367D /* bar_button_5.png */; };
-		099F41E41FD68F260020367D /* bar_button_5_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 099F41D31FD68F260020367D /* bar_button_5_selected.png */; };
+		099F41E31FD68F260020367D /* bar_button_5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 099F41D21FD68F260020367D /* bar_button_5@2x.png */; };
+		099F41E41FD68F260020367D /* bar_button_5_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 099F41D31FD68F260020367D /* bar_button_5_selected@2x.png */; };
 		099F41E51FD68F260020367D /* progressSlider_thum_mini.png in Resources */ = {isa = PBXBuildFile; fileRef = 099F41D41FD68F260020367D /* progressSlider_thum_mini.png */; };
 		099F41E61FD68F260020367D /* video_slider_highted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 099F41D51FD68F260020367D /* video_slider_highted@2x.png */; };
 		099F41E71FD68F260020367D /* video_slider_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 099F41D61FD68F260020367D /* video_slider_normal@2x.png */; };
@@ -68,6 +69,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		096110871FD7BCB20036915D /* UINavigationController+Rotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+Rotation.m"; sourceTree = "<group>"; };
+		096110881FD7BCB20036915D /* UINavigationController+Rotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+Rotation.h"; sourceTree = "<group>"; };
 		099F415F1FD64DFB0020367D /* ZQAvPlayerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZQAvPlayerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		099F41621FD64DFB0020367D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		099F41631FD64DFB0020367D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -105,8 +108,8 @@
 		099F41CF1FD68F260020367D /* bar_button_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bar_button_2.png; sourceTree = "<group>"; };
 		099F41D01FD68F260020367D /* bar_button_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bar_button_3.png; sourceTree = "<group>"; };
 		099F41D11FD68F260020367D /* bar_button_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bar_button_4.png; sourceTree = "<group>"; };
-		099F41D21FD68F260020367D /* bar_button_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bar_button_5.png; sourceTree = "<group>"; };
-		099F41D31FD68F260020367D /* bar_button_5_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bar_button_5_selected.png; sourceTree = "<group>"; };
+		099F41D21FD68F260020367D /* bar_button_5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bar_button_5@2x.png"; sourceTree = "<group>"; };
+		099F41D31FD68F260020367D /* bar_button_5_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bar_button_5_selected@2x.png"; sourceTree = "<group>"; };
 		099F41D41FD68F260020367D /* progressSlider_thum_mini.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = progressSlider_thum_mini.png; sourceTree = "<group>"; };
 		099F41D51FD68F260020367D /* video_slider_highted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "video_slider_highted@2x.png"; sourceTree = "<group>"; };
 		099F41D61FD68F260020367D /* video_slider_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "video_slider_normal@2x.png"; sourceTree = "<group>"; };
@@ -183,6 +186,8 @@
 				099F41631FD64DFB0020367D /* AppDelegate.m */,
 				099F41651FD64DFB0020367D /* ViewController.h */,
 				099F41661FD64DFB0020367D /* ViewController.m */,
+				096110881FD7BCB20036915D /* UINavigationController+Rotation.h */,
+				096110871FD7BCB20036915D /* UINavigationController+Rotation.m */,
 				099F41E91FD6A1C40020367D /* ZQVideoPlayController.h */,
 				099F41E81FD6A1C30020367D /* ZQVideoPlayController.m */,
 				099F41681FD64DFB0020367D /* Main.storyboard */,
@@ -281,8 +286,8 @@
 				099F41CF1FD68F260020367D /* bar_button_2.png */,
 				099F41D01FD68F260020367D /* bar_button_3.png */,
 				099F41D11FD68F260020367D /* bar_button_4.png */,
-				099F41D21FD68F260020367D /* bar_button_5.png */,
-				099F41D31FD68F260020367D /* bar_button_5_selected.png */,
+				099F41D21FD68F260020367D /* bar_button_5@2x.png */,
+				099F41D31FD68F260020367D /* bar_button_5_selected@2x.png */,
 			);
 			path = OptionViewImgs;
 			sourceTree = "<group>";
@@ -453,11 +458,11 @@
 				099F416A1FD64DFB0020367D /* Main.storyboard in Resources */,
 				099F41E51FD68F260020367D /* progressSlider_thum_mini.png in Resources */,
 				099F41DB1FD68F260020367D /* btn_pause_highted.png in Resources */,
-				099F41E31FD68F260020367D /* bar_button_5.png in Resources */,
+				099F41E31FD68F260020367D /* bar_button_5@2x.png in Resources */,
 				099F41DD1FD68F260020367D /* btn_play_highted.png in Resources */,
 				099F41D91FD68F260020367D /* btn_before_normal.png in Resources */,
 				099F41DC1FD68F260020367D /* btn_pause_nomal.png in Resources */,
-				099F41E41FD68F260020367D /* bar_button_5_selected.png in Resources */,
+				099F41E41FD68F260020367D /* bar_button_5_selected@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -491,6 +496,7 @@
 				099F41FC1FD6A1D10020367D /* ZQVideoComplexControlBar.m in Sources */,
 				099F41971FD64EB20020367D /* ZQAVPlayer.m in Sources */,
 				099F41F81FD6A1D10020367D /* ZQButton.m in Sources */,
+				096110891FD7BCB20036915D /* UINavigationController+Rotation.m in Sources */,
 				099F42051FD6A45F0020367D /* MBProgressHUD.m in Sources */,
 				099F41FA1FD6A1D10020367D /* ZQProgressView.m in Sources */,
 				099F41641FD64DFB0020367D /* AppDelegate.m in Sources */,

@@ -69,10 +69,9 @@ typedef NS_ENUM(NSInteger,ControlBarButtonType)
 
 -(void)showFullScreenBtn:(BOOL)show;
 
-/**
- 更新锁定按钮状态
- */
--(void)setLocked:(BOOL)_locked;
+
+
+-(void)setPlayStatus:(BOOL)status;
 
 
 @end
